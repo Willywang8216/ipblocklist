@@ -1,0 +1,46 @@
+To automatically sync a forked repository every hour, the method depends on the platform you are using (GitHub, GitLab, etc.). For GitHub, the most reliable way to enforce an hourly schedule is by using **GitHub Actions** with a cron job.
+
+### Method 1: GitHub Actions (Recommended for GitHub)
+You can create a workflow file in your repository that triggers a sync operation every hour using a cron schedule.
+
+1.  **Create a Workflow File**: In your forked repository, create a new file at `.github/workflows/sync.yml`.
+2.  **Add the Configuration**: Paste the following code, which uses the `Fork-Sync-With-Upstream-action`. This example sets the schedule to run at the top of every hour (`0 * * * *`).
+
+```yaml
+name: Hourly Sync with Upstream
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs every hour
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  sync_with_upstream:
+    runs-on: ubuntu-latest
+    name: Sync main with upstream latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout target branch
+        uses: actions/checkout@v3
+        with:
+          ref: main  # Replace with your default branch name (e.g., master)
+
+      # Step 2: Run the sync action
+      - name: Sync Upstream
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
+        with:
+          upstream_sync_repo: owner/upstream-repo # Replace with the original repo (e.g., facebook/react)
+          upstream_sync_branch: main # Replace with the original repo's branch
+          target_sync_branch: main   # Replace with your fork's branch
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }} # Automatically generated token
+          test_mode: false
+```
+
+### Method 2: GitHub Apps (Easier Setup)
+If you prefer a "set-and-forget" solution without writing code, you can install a GitHub App.
+*   **Pull App**: There is a popular app called "Pull" (often found as `wei/pull`) that you can install on your repository. It automatically syncs the default branch of your fork with the upstream repository. While you cannot strictly define the "every hour" rule (it typically runs based on events or its own internal schedule), it effectively keeps the repo synchronized automatically.
+
+### Method 3: GitLab (Built-in Feature)
+If your repository is hosted on GitLab, this functionality is built-in.
+*   **Repository Mirroring**: GitLab's "Pull Mirroring" feature automatically updates your fork from the upstream repository. By default, this method updates your fork **once per hour**, requiring no manual script or configuration files. You can enable this under **Settings > Repository > Mirroring repositories**.
