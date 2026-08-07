@@ -1,8 +1,8 @@
-name: Hourly Sync with Upstream
+name: Daily Sync with Upstream
 
 on:
   schedule:
-    - cron: '0 * * * *' # Runs every hour
+    - cron: '17 5 * * *' # Runs daily at 05:17 UTC
   workflow_dispatch: # Allows manual triggering
 
 jobs:
