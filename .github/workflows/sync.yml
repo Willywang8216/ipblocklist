@@ -1,0 +1,8 @@
+# DEPRECATED — purged.
+
+This workflow was a no-op stub and has been removed from the active set.
+
+For the actual blocking workflow, see `update.yml` (every 2 hours, fetches public
+blocklists and writes `tables/inbound/*.txt` + `tables/outbound/*.txt`).
+
+For daily stats, see `stats.yml` (regenerates `stats/history.json` locally).
