@@ -285,8 +285,13 @@
         "total_ipv4_addresses_covered": 23716988
     },
     {
-        "date": "2026-10-03T00:05:37",
-        "timestamp": 1790985937.0,
-        "total_ipv4_addresses_covered": 23717932
+        "date": "2026-10-03T21:09:45",
+        "timestamp": 1791061785.0,
+        "total_ipv4_addresses_covered": 23731658
+    },
+    {
+        "date": "2026-10-04T00:35:21",
+        "timestamp": 1791074121.0,
+        "total_ipv4_addresses_covered": 23731199
     }
 ]
